@@ -13,30 +13,7 @@ namespace PostageApp.DataBase
         {
         }
 
-        public override void Add(Postage item)
-        {
-            Validate(item);
-            item.ID = maxID++;
-            items.Add(item);
-        }
-
-        public override void Update(Postage item)
-        {
-            var itemToUpdate = items.FirstOrDefault(n => n.ID == item.ID);
-            if (itemToUpdate == null)
-                throw new ArgumentException($"Postage with ID {item.ID} does not exist");
-
-            Validate(item);
-            itemToUpdate.WorkmanID = item.WorkmanID;
-            itemToUpdate.ClientID = item.ClientID;
-            itemToUpdate.PostageTypeID = item.PostageTypeID;
-            itemToUpdate.DepartmentID = item.DepartmentID;
-            itemToUpdate.Weight = item.Weight;
-            itemToUpdate.Price = item.Price;
-            itemToUpdate.DeliveredOn = item.DeliveredOn;
-        }
-
-        private void Validate(Postage item)
+        protected override void Validate(Postage item)
         {
             if (db.Workmans.Contains(item.WorkmanID) == false)
                 throw new ArgumentException($"Workman with ID {item.WorkmanID} does not exist");
@@ -49,6 +26,15 @@ namespace PostageApp.DataBase
 
             if (db.Workmans.Contains(item.DepartmentID) == false)
                 throw new ArgumentException($"Department with ID {item.DepartmentID} does not exist");
+
+            if (item.Price < 0)
+                throw new ArgumentException($"Price should be positive number");
+
+            if (item.Weight < 0)
+                throw new ArgumentException($"Weight should be positive number");
+
+            if (item.DeliveredOn > DateTime.Now)
+                throw new ArgumentException($"DeliveredOn can't be future date");
         }
     }
 }

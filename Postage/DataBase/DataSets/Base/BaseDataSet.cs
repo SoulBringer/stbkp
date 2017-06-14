@@ -13,8 +13,7 @@ namespace PostageApp.DataBase
         protected int maxID = 0;
         protected List<T> items = new List<T>();
 
-        public abstract void Add(T item);
-        public abstract void Update(T item);
+        protected abstract void Validate(T item);
 
         public BaseDataSet(DataBase db)
         {
@@ -37,6 +36,24 @@ namespace PostageApp.DataBase
         public bool Contains(int id)
         {
             return items.Exists(n => n.ID == id);
+        }
+
+        public void Add(T item)
+        {
+            Validate(item);
+            item.ID = maxID++;
+            items.Add(item);
+        }
+
+        public void Update(T item)
+        {
+            var itemToUpdate = items.FirstOrDefault(n => n.ID == item.ID);
+            if (itemToUpdate == null)
+                throw new ArgumentException($"{nameof(T)} with ID {item.ID} does not exist");
+
+            Validate(item);
+            items.Remove(itemToUpdate);
+            items.Add(item);
         }
     }
 }

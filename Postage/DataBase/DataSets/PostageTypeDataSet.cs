@@ -13,12 +13,7 @@ namespace PostageApp.DataBase
         {
         }
 
-        public override void Add(PostageType item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(PostageType item)
+        protected override void Validate(PostageType item)
         {
             throw new NotImplementedException();
         }

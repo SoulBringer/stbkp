@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PostageApp.Entities
+namespace PostageApp.DataBase.Entities
 {
-    public class Postage
+    public class Postage : IEntity
     {
         public int ID { get; set; }
         public int WorkmanID { get; set; }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PostageApp.Entities
+namespace PostageApp.DataBase.Entities
 {
-    public class PostageType
+    public class Client : IEntity
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Note { get; set; }
+        public string Address { get; set; }
     }
 }

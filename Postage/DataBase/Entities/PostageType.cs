@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PostageApp.Entities
+namespace PostageApp.DataBase.Entities
 {
-    public class Workman
+    public class PostageType : IEntity
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int DepartmentID { get; set; }
-        public DateTime HiredOn { get; set; }
+        public string Note { get; set; }
     }
 }

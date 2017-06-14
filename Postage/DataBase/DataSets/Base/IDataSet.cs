@@ -8,7 +8,7 @@ namespace PostageApp.DataBase
 {
     interface IDataSet<T>
     {
-        void Add(T item);
+        int Add(T item);
         void Update(T item);
         void Remove(int id);
         IEnumerable<T> GetItems();

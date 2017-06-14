@@ -38,11 +38,12 @@ namespace PostageApp.DataBase
             return items.Exists(n => n.ID == id);
         }
 
-        public void Add(T item)
+        public int Add(T item)
         {
             Validate(item);
             item.ID = maxID++;
             items.Add(item);
+            return item.ID;
         }
 
         public void Update(T item)

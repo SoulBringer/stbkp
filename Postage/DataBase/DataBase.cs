@@ -11,7 +11,7 @@ namespace PostageApp.DataBase
     {
         public ClientDataSet Clients { get; }
         public DepartmentDataSet Departments { get; }
-        public PostageDataSet Postage { get; }
+        public PostageDataSet Postages { get; }
         public PostageTypeDataSet PostageTypes { get; }
         public WorkmanDataSet Workmans { get; }
 
@@ -20,7 +20,7 @@ namespace PostageApp.DataBase
         {
             Clients = new ClientDataSet(this);
             Departments = new DepartmentDataSet(this);
-            Postage = new PostageDataSet(this);
+            Postages = new PostageDataSet(this);
             PostageTypes = new PostageTypeDataSet(this);
             Workmans = new WorkmanDataSet(this);
         }

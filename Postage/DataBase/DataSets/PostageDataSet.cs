@@ -18,13 +18,13 @@ namespace PostageApp.DataBase
             if (db.Workmans.Contains(item.WorkmanID) == false)
                 throw new ArgumentException($"Workman with ID {item.WorkmanID} does not exist");
 
-            if (db.Workmans.Contains(item.ClientID) == false)
+            if (db.Clients.Contains(item.ClientID) == false)
                 throw new ArgumentException($"Client with ID {item.ClientID} does not exist");
 
-            if (db.Workmans.Contains(item.PostageTypeID) == false)
+            if (db.PostageTypes.Contains(item.PostageTypeID) == false)
                 throw new ArgumentException($"PostageType with ID {item.PostageTypeID} does not exist");
 
-            if (db.Workmans.Contains(item.DepartmentID) == false)
+            if (db.Departments.Contains(item.DepartmentID) == false)
                 throw new ArgumentException($"Department with ID {item.DepartmentID} does not exist");
 
             if (item.Price < 0)

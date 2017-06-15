@@ -15,7 +15,10 @@ namespace PostageApp.DataBase
 
         protected override void Validate(Department item)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(item.PostalIndex))
+                throw new ArgumentException("PostalIndex can't be empty");
+            if (string.IsNullOrEmpty(item.Address))
+                throw new ArgumentException("Address can't be empty");
         }
     }
 }

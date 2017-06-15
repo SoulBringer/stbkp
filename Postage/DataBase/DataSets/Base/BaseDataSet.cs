@@ -10,7 +10,7 @@ namespace PostageApp.DataBase
     public abstract class BaseDataSet<T> : IDataSet<T> where T : IEntity
     {
         protected DataBase db;
-        protected int maxID = 0;
+        protected int maxID = 1;
         protected List<T> items = new List<T>();
 
         protected abstract void Validate(T item);

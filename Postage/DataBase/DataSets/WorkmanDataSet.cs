@@ -15,7 +15,14 @@ namespace PostageApp.DataBase
 
         protected override void Validate(Workman item)
         {
-            throw new NotImplementedException();
+            if (db.Departments.Contains(item.DepartmentID) == false)
+                throw new ArgumentException($"Department with ID {item.DepartmentID} does not exist");
+            if (string.IsNullOrEmpty(item.Name))
+                throw new ArgumentException("Name can't be empty");
+            if (item.HiredOn < new DateTime(2010, 01, 01))
+                throw new ArgumentException("HiredOn can't be before 2010.01.01");
+            if (item.HiredOn > DateTime.Now)
+                throw new ArgumentException("HiredOn can't be in future");
         }
     }
 }

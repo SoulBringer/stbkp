@@ -79,5 +79,12 @@ namespace UnitTests
 
             db.Departments.Remove(depID);
         }
+
+        [TestMethod]
+        public void LoadDBFromFile()
+        {
+            //var db = DataBase.LoadFromFile("db.json");
+            //db.SaveToFile("db.json");
+        }
     }
 }

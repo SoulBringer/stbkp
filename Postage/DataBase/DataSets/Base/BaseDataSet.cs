@@ -1,4 +1,5 @@
-﻿using PostageApp.DataBase.Entities;
+﻿using Newtonsoft.Json;
+using PostageApp.DataBase.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,11 @@ namespace PostageApp.DataBase
     public abstract class BaseDataSet<T> : IDataSet<T> where T : IEntity
     {
         protected DataBase db;
+
+        [JsonProperty("maxid")]
         protected int maxID = 1;
+
+        [JsonProperty("items")]
         protected List<T> items = new List<T>();
 
         protected abstract void Validate(T item);

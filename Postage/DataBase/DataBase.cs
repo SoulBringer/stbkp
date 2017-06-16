@@ -1,6 +1,8 @@
-﻿using PostageApp.DataBase.Entities;
+﻿using Newtonsoft.Json;
+using PostageApp.DataBase.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +35,18 @@ namespace PostageApp.DataBase
                 Postages.IsEntityInUse(entity) ||
                 PostageTypes.IsEntityInUse(entity) ||
                 Workmans.IsEntityInUse(entity);
+        }
+
+        public static DataBase LoadFromFile(string fileName)
+        {
+            var input = File.ReadAllText(fileName);
+            return JsonConvert.DeserializeObject<DataBase>(input);
+        }
+
+        public void SaveToFile(string fileName)
+        {
+            var output = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(fileName, output);
         }
     }
 }

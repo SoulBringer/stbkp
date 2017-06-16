@@ -63,7 +63,7 @@ namespace PostageApp.DataBase
         {
             var itemToUpdate = items.FirstOrDefault(n => n.ID == item.ID);
             if (itemToUpdate == null)
-                throw new ArgumentException($"{nameof(T)} with ID {item.ID} does not exist");
+                throw new ArgumentException($"{typeof(T).Name} with ID {item.ID} does not exist");
 
             Validate(item);
             items.Remove(itemToUpdate);

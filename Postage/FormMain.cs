@@ -19,11 +19,11 @@ namespace PostageApp
         public FormMain()
         {
             InitializeComponent();
-            InitializeDatabase();
+            InitializeDefaultDatabase();
             tabControl1_SelectedIndexChanged(this, null);
         }
 
-        private void InitializeDatabase()
+        private void InitializeDefaultDatabase()
         {
             var clientID = db.Clients.Add(new Client() { Name = "Vasya", Address = "Keletska 97/2" });
             var depID = db.Departments.Add(new Department() { PostalIndex = "21000", Address = "Kosmo 14/88" });
@@ -44,19 +44,40 @@ namespace PostageApp
             );
         }
 
-        private void Postage_Click(object sender, EventArgs e)
+        private void btnDBLoad_Click(object sender, EventArgs e)
         {
-
+            var dialog = new OpenFileDialog() { InitialDirectory = Application.StartupPath, Filter = "JSON|*.json|All Files|*.*" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var newDB = DataBase.DataBase.LoadFromFile(dialog.FileName);
+                    db = newDB;
+                    tabControl1_SelectedIndexChanged(this, null);
+                    MessageBox.Show("Database is loaded", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Can't load file as a valid database", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnDBSave_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            var dialog = new SaveFileDialog() { InitialDirectory = Application.StartupPath, Filter = "JSON|*.json|All Files|*.*" };
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    db.SaveToFile(dialog.FileName);
+                    MessageBox.Show("Database is saved", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch
+                {
+                    MessageBox.Show("Can't load file as a valid database", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void lstClient_SelectedIndexChanged(object sender, EventArgs e)
@@ -86,9 +107,16 @@ namespace PostageApp
             lstWorkman.Items.AddRange(workmans);
 
             // Update comboboxes with up-to-date values
+            cbDepartment.SelectedItem = null;
+            cbPostageType.SelectedItem = null;
+            cbClientID.SelectedItem = null;
+            cbWorkman.SelectedItem = null;
+            cbwDepartment.SelectedItem = null;
+
             cbDepartment.Items.Clear();
             cbPostageType.Items.Clear();
             cbClientID.Items.Clear();
+            cbWorkman.Items.Clear();
             cbwDepartment.Items.Clear();
 
             cbDepartment.Items.AddRange(departments);
@@ -96,19 +124,12 @@ namespace PostageApp
             cbClientID.Items.AddRange(clients);
             cbWorkman.Items.AddRange(workmans);
             cbwDepartment.Items.AddRange(departments);
-        }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
+            txtPrice.Text = "";
+            txtWeight.Text = "";
         }
 
         private void lstPostageType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button14_Click(object sender, EventArgs e)
         {
 
         }
@@ -129,14 +150,84 @@ namespace PostageApp
             }
         }
 
-        private void Client_Click(object sender, EventArgs e)
+        private int GetSelectedId(ComboBox cbClientID)
         {
-
+            var item = cbClientID.SelectedItem as IEntity;
+            if (item != null)
+                return item.ID;
+            return -1;
         }
 
-        private void Department_Click(object sender, EventArgs e)
+        private void btnPostageNew_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                var item = new Postage()
+                {
+                    ClientID = GetSelectedId(cbClientID),
+                    DepartmentID = GetSelectedId(cbDepartment),
+                    PostageTypeID = GetSelectedId(cbPostageType),
+                    WorkmanID = GetSelectedId(cbWorkman),
+                    Price = int.Parse(txtPrice.Text),   // TODO: consider change to NumericUpDown
+                    Weight = int.Parse(txtWeight.Text), // TODO: consider change to NumericUpDown
+                    DeliveredOn = dtDelieredOn.Value
+                };
+                db.Postages.Add(item);
+                tabControl1_SelectedIndexChanged(this, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private void btnPostageUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            { 
+                var item = lstPostage.SelectedItem as Postage;
+                if (item != null)
+                {
+                    item.ClientID = GetSelectedId(cbClientID);
+                    item.DepartmentID = GetSelectedId(cbDepartment);
+                    item.PostageTypeID = GetSelectedId(cbPostageType);
+                    item.WorkmanID = GetSelectedId(cbWorkman);
+                    item.Price = int.Parse(txtPrice.Text);
+                    item.Weight = int.Parse(txtWeight.Text);
+                    item.DeliveredOn = dtDelieredOn.Value;
+
+                    db.Postages.Update(item);
+                    tabControl1_SelectedIndexChanged(this, null);
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPostageRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstPostage.SelectedItem as Postage;
+                if (item != null)
+                {
+                    if (MessageBox.Show("Delete selected entity?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        db.Postages.Remove(item.ID);
+                        tabControl1_SelectedIndexChanged(this, null);
+                    }
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }        
     }
 }

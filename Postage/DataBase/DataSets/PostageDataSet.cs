@@ -33,6 +33,9 @@ namespace PostageApp.DataBase
             if (item.Weight < 0)
                 throw new ArgumentException($"Weight should be positive number");
 
+            if (item.DeliveredOn == null)
+                throw new ArgumentException("DeliveredOn can't be empty");
+
             if (item.DeliveredOn > DateTime.Now)
                 throw new ArgumentException($"DeliveredOn can't be future date");
         }

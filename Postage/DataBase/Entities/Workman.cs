@@ -12,5 +12,10 @@ namespace PostageApp.DataBase.Entities
         public string Name { get; set; }
         public int DepartmentID { get; set; }
         public DateTime HiredOn { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace PostageApp.DataBase
         int Add(T item);
         void Update(T item);
         void Remove(int id);
+        T GetItem(int id);
         IEnumerable<T> GetItems();
         bool Contains(int id);
     }

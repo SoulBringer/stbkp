@@ -35,6 +35,12 @@ namespace PostageApp.DataBase
             items.Remove(itemToRemove);
         }
 
+        public T GetItem(int id)
+        {
+            Contains(id);
+            return items.FirstOrDefault(n => n.ID == id);
+        }
+
         public IEnumerable<T> GetItems()
         {
             return items;

@@ -16,5 +16,10 @@ namespace PostageApp.DataBase.Entities
         public int Weight { get; set; }
         public int Price { get; set; }
         public DateTime DeliveredOn { get; set; }
+
+        public override string ToString()
+        {
+            return $"Postage {ID} - {Price}$";
+        }
     }
 }

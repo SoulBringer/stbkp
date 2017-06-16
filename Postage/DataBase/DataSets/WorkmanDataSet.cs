@@ -24,5 +24,12 @@ namespace PostageApp.DataBase
             if (item.HiredOn > DateTime.Now)
                 throw new ArgumentException("HiredOn can't be in future");
         }
+
+        public override bool IsEntityInUse(IEntity entity)
+        {
+            if (entity is Department)
+                return items.Exists(n => n.DepartmentID == entity.ID);
+            return false;
+        }
     }
 }

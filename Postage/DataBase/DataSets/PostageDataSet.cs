@@ -36,5 +36,18 @@ namespace PostageApp.DataBase
             if (item.DeliveredOn > DateTime.Now)
                 throw new ArgumentException($"DeliveredOn can't be future date");
         }
+
+        public override bool IsEntityInUse(IEntity entity)
+        {
+            if (entity is Workman)
+                return items.Exists(n => n.WorkmanID == entity.ID);
+            if (entity is Client)
+                return items.Exists(n => n.ClientID == entity.ID);
+            if (entity is PostageType)
+                return items.Exists(n => n.PostageTypeID == entity.ID);
+            if (entity is Department)
+                return items.Exists(n => n.DepartmentID == entity.ID);
+            return false;
+        }
     }
 }

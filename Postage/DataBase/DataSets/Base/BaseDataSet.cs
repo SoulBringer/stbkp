@@ -25,6 +25,8 @@ namespace PostageApp.DataBase
             var itemToRemove = items.FirstOrDefault(n => n.ID == id);
             if (itemToRemove == null)
                 throw new ArgumentException($"{nameof(T)} with ID {id} is not exist");
+            if (db.IsEntityInUse(itemToRemove))
+                throw new ArgumentException($"{nameof(T)} with ID {id} is used in other entities");
             items.Remove(itemToRemove);
         }
 
@@ -61,6 +63,11 @@ namespace PostageApp.DataBase
             Validate(item);
             items.Remove(itemToUpdate);
             items.Add(item);
+        }
+
+        public virtual bool IsEntityInUse(IEntity entity)
+        {
+            return false;
         }
     }
 }

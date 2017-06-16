@@ -24,5 +24,15 @@ namespace PostageApp.DataBase
             PostageTypes = new PostageTypeDataSet(this);
             Workmans = new WorkmanDataSet(this);
         }
+
+        public bool IsEntityInUse(IEntity entity)
+        {
+            return
+                Clients.IsEntityInUse(entity) ||
+                Departments.IsEntityInUse(entity) ||
+                Postages.IsEntityInUse(entity) ||
+                PostageTypes.IsEntityInUse(entity) ||
+                Workmans.IsEntityInUse(entity);
+        }
     }
 }

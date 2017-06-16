@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostageApp.DataBase.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace PostageApp.DataBase
         T GetItem(int id);
         IEnumerable<T> GetItems();
         bool Contains(int id);
-    }
+        bool IsEntityInUse(IEntity entity);
+        }
 }

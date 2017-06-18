@@ -79,7 +79,7 @@
             this.Workman = new System.Windows.Forms.TabPage();
             this.btnWorkmanRemove = new System.Windows.Forms.Button();
             this.btnWorkmanUpdate = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.btnWorkman_New = new System.Windows.Forms.Button();
             this.txtwname = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -89,6 +89,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnDBLoad = new System.Windows.Forms.ToolStripButton();
             this.btnDBSave = new System.Windows.Forms.ToolStripButton();
+            this.dtHiredOn = new System.Windows.Forms.DateTimePicker();
             this.btnWorkmanNew.SuspendLayout();
             this.Postage.SuspendLayout();
             this.Client.SuspendLayout();
@@ -421,6 +422,7 @@
             this.btnDepartmentRemove.Size = new System.Drawing.Size(54, 54);
             this.btnDepartmentRemove.TabIndex = 19;
             this.btnDepartmentRemove.UseVisualStyleBackColor = true;
+            this.btnDepartmentRemove.Click += new System.EventHandler(this.btnDepartmentRemove_Click);
             // 
             // btnDepartmentUpdate
             // 
@@ -430,6 +432,7 @@
             this.btnDepartmentUpdate.Size = new System.Drawing.Size(54, 54);
             this.btnDepartmentUpdate.TabIndex = 18;
             this.btnDepartmentUpdate.UseVisualStyleBackColor = true;
+            this.btnDepartmentUpdate.Click += new System.EventHandler(this.btnDepartmentUpdate_Click);
             // 
             // btnDepartmentNew
             // 
@@ -439,6 +442,7 @@
             this.btnDepartmentNew.Size = new System.Drawing.Size(54, 54);
             this.btnDepartmentNew.TabIndex = 17;
             this.btnDepartmentNew.UseVisualStyleBackColor = true;
+            this.btnDepartmentNew.Click += new System.EventHandler(this.btnDepartmentNew_Click);
             // 
             // txtdepindex
             // 
@@ -481,6 +485,7 @@
             this.lstDepartment.Name = "lstDepartment";
             this.lstDepartment.Size = new System.Drawing.Size(377, 420);
             this.lstDepartment.TabIndex = 1;
+            this.lstDepartment.SelectedIndexChanged += new System.EventHandler(this.lstDepartment_SelectedIndexChanged);
             // 
             // PostageType
             // 
@@ -507,6 +512,7 @@
             this.btnPostTypeRemove.Size = new System.Drawing.Size(54, 54);
             this.btnPostTypeRemove.TabIndex = 17;
             this.btnPostTypeRemove.UseVisualStyleBackColor = true;
+            this.btnPostTypeRemove.Click += new System.EventHandler(this.btnPostTypeRemove_Click);
             // 
             // btnPostTypeUpdate
             // 
@@ -516,6 +522,7 @@
             this.btnPostTypeUpdate.Size = new System.Drawing.Size(54, 54);
             this.btnPostTypeUpdate.TabIndex = 16;
             this.btnPostTypeUpdate.UseVisualStyleBackColor = true;
+            this.btnPostTypeUpdate.Click += new System.EventHandler(this.btnPostTypeUpdate_Click);
             // 
             // btnPostTypeNew
             // 
@@ -525,6 +532,7 @@
             this.btnPostTypeNew.Size = new System.Drawing.Size(54, 54);
             this.btnPostTypeNew.TabIndex = 15;
             this.btnPostTypeNew.UseVisualStyleBackColor = true;
+            this.btnPostTypeNew.Click += new System.EventHandler(this.btnPostTypeNew_Click);
             // 
             // txtptname
             // 
@@ -573,9 +581,10 @@
             // 
             // Workman
             // 
+            this.Workman.Controls.Add(this.dtHiredOn);
             this.Workman.Controls.Add(this.btnWorkmanRemove);
             this.Workman.Controls.Add(this.btnWorkmanUpdate);
-            this.Workman.Controls.Add(this.button12);
+            this.Workman.Controls.Add(this.btnWorkman_New);
             this.Workman.Controls.Add(this.txtwname);
             this.Workman.Controls.Add(this.label10);
             this.Workman.Controls.Add(this.label9);
@@ -597,6 +606,7 @@
             this.btnWorkmanRemove.Size = new System.Drawing.Size(54, 54);
             this.btnWorkmanRemove.TabIndex = 20;
             this.btnWorkmanRemove.UseVisualStyleBackColor = true;
+            this.btnWorkmanRemove.Click += new System.EventHandler(this.btnWorkmanRemove_Click);
             // 
             // btnWorkmanUpdate
             // 
@@ -606,15 +616,17 @@
             this.btnWorkmanUpdate.Size = new System.Drawing.Size(54, 54);
             this.btnWorkmanUpdate.TabIndex = 19;
             this.btnWorkmanUpdate.UseVisualStyleBackColor = true;
+            this.btnWorkmanUpdate.Click += new System.EventHandler(this.btnWorkmanUpdate_Click);
             // 
-            // button12
+            // btnWorkman_New
             // 
-            this.button12.Image = global::PostageApp.Properties.Resources.New;
-            this.button12.Location = new System.Drawing.Point(542, 369);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(54, 54);
-            this.button12.TabIndex = 18;
-            this.button12.UseVisualStyleBackColor = true;
+            this.btnWorkman_New.Image = global::PostageApp.Properties.Resources.New;
+            this.btnWorkman_New.Location = new System.Drawing.Point(542, 369);
+            this.btnWorkman_New.Name = "btnWorkman_New";
+            this.btnWorkman_New.Size = new System.Drawing.Size(54, 54);
+            this.btnWorkman_New.TabIndex = 18;
+            this.btnWorkman_New.UseVisualStyleBackColor = true;
+            this.btnWorkman_New.Click += new System.EventHandler(this.btnWorkman_New_Click);
             // 
             // txtwname
             // 
@@ -669,6 +681,7 @@
             this.lstWorkman.Name = "lstWorkman";
             this.lstWorkman.Size = new System.Drawing.Size(377, 420);
             this.lstWorkman.TabIndex = 1;
+            this.lstWorkman.SelectedIndexChanged += new System.EventHandler(this.lstWorkman_SelectedIndexChanged);
             // 
             // toolStrip1
             // 
@@ -703,6 +716,13 @@
             this.btnDBSave.Text = "toolStripButton2";
             this.btnDBSave.ToolTipText = "Save database";
             this.btnDBSave.Click += new System.EventHandler(this.btnDBSave_Click);
+            // 
+            // dtHiredOn
+            // 
+            this.dtHiredOn.Location = new System.Drawing.Point(431, 250);
+            this.dtHiredOn.Name = "dtHiredOn";
+            this.dtHiredOn.Size = new System.Drawing.Size(285, 20);
+            this.dtHiredOn.TabIndex = 21;
             // 
             // FormMain
             // 
@@ -793,7 +813,8 @@
         private System.Windows.Forms.Button btnPostTypeNew;
         private System.Windows.Forms.Button btnWorkmanRemove;
         private System.Windows.Forms.Button btnWorkmanUpdate;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button btnWorkman_New;
+        private System.Windows.Forms.DateTimePicker dtHiredOn;
     }
 }
 

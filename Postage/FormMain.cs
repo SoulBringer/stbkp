@@ -19,7 +19,7 @@ namespace PostageApp
         public FormMain()
         {
             InitializeComponent();
-            InitializeDefaultDatabase();
+            //InitializeDefaultDatabase();//
             tabControl1_SelectedIndexChanged(this, null);
         }
 
@@ -120,14 +120,18 @@ namespace PostageApp
             cbWorkman.Items.AddRange(workmans);
             cbwDepartment.Items.AddRange(departments);
 
+            // Clear text fields
             txtPrice.Text = "";
             txtWeight.Text = "";
+            txtcaddress.Text = "";
+            txtcname.Text = "";
+            txtdepindex.Text = "";
+            txtdepaddress.Text = "";
+            txtptname.Text = "";
+            txtwname.Text = "";
         }
 
-        private void lstPostageType_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-        }
 
         private int GetSelectedId(ComboBox cbClientID)
         {
@@ -305,5 +309,224 @@ namespace PostageApp
         }
 
         #endregion
+
+        private void lstDepartment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            var item = lstDepartment.SelectedItem as Department;
+            if (item != null)
+            {
+                txtdepaddress.Text = item.Address;
+                txtdepindex.Text = item.PostalIndex;
+            }
+
+        }
+
+        private void btnDepartmentNew_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = new Department()
+                {
+                    PostalIndex = txtdepindex.Text,
+                    Address = txtdepaddress.Text
+                };
+                db.Departments.Add(item);
+                tabControl1_SelectedIndexChanged(this, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDepartmentUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstDepartment.SelectedItem as Department;
+                if (item != null)
+                {
+                    item.PostalIndex = txtdepindex.Text;
+                    item.Address = txtdepaddress.Text;
+
+                    db.Departments.Update(item);
+                    tabControl1_SelectedIndexChanged(this, null);
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDepartmentRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstDepartment.SelectedItem as Department;
+                if (item != null)
+                {
+                    if (MessageBox.Show("Delete selected entity?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        db.Departments.Remove(item.ID);
+                        tabControl1_SelectedIndexChanged(this, null);
+                    }
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void lstPostageType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = lstPostageType.SelectedItem as PostageType;
+            if (item != null)
+            {
+                txtptname.Text = item.Name;
+                txtnote.Text = item.Note;
+            }
+        }
+
+        private void btnPostTypeNew_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = new PostageType()
+                {
+                    Name = txtptname.Text,
+                    Note = txtnote.Text
+                };
+                db.PostageTypes.Add(item);
+                tabControl1_SelectedIndexChanged(this, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPostTypeUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstPostageType.SelectedItem as PostageType;
+                if (item != null)
+                {
+                    item.Name = txtptname.Text;
+                    item.Note = txtnote.Text;
+
+                    db.PostageTypes.Update(item);
+                    tabControl1_SelectedIndexChanged(this, null);
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnPostTypeRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstPostageType.SelectedItem as PostageType;
+                if (item != null)
+                {
+                    if (MessageBox.Show("Delete selected entity?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        db.PostageTypes.Remove(item.ID);
+                        tabControl1_SelectedIndexChanged(this, null);
+                    }
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void lstWorkman_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = lstWorkman.SelectedItem as Workman;
+            if (item != null)
+            {
+                txtwname.Text = item.Name;
+                cbwDepartment.SelectedItem = db.Departments.GetItem(item.DepartmentID);
+                dtHiredOn.Value = item.HiredOn;
+            }
+        }
+
+        private void btnWorkman_New_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = new Workman()
+                {
+                    Name = txtwname.Text,
+                    DepartmentID = GetSelectedId(cbwDepartment),
+                    HiredOn = dtHiredOn.Value
+                };
+                db.Workmans.Add(item);
+                tabControl1_SelectedIndexChanged(this, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnWorkmanUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstWorkman.SelectedItem as Workman;
+                if (item != null)
+                {
+                    item.Name = txtwname.Text;
+                    item.DepartmentID = GetSelectedId(cbwDepartment);
+                    item.HiredOn = dtHiredOn.Value;
+
+                    db.Workmans.Update(item);
+                    tabControl1_SelectedIndexChanged(this, null);
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnWorkmanRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstWorkman.SelectedItem as Workman;
+                if (item != null)
+                {
+                    if (MessageBox.Show("Delete selected entity?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        db.Workmans.Remove(item.ID);
+                        tabControl1_SelectedIndexChanged(this, null);
+                    }
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

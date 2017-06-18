@@ -19,6 +19,7 @@ namespace PostageApp.DataBase
                 throw new ArgumentException("Name can't be empty");
             if (string.IsNullOrEmpty(item.Address))
                 throw new ArgumentException("Address can't be empty");
+
         }
     }
 }

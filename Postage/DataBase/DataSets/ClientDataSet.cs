@@ -17,6 +17,10 @@ namespace PostageApp.DataBase
         {
             if (string.IsNullOrEmpty(item.Name))
                 throw new ArgumentException("Name can't be empty");
+
+            if (Validator.IsValidName(item.Name) == false)
+                throw new ArgumentException("Name should contain letters only");
+
             if (string.IsNullOrEmpty(item.Address))
                 throw new ArgumentException("Address can't be empty");
 

@@ -48,5 +48,11 @@ namespace PostageApp.DataBase
             var output = JsonConvert.SerializeObject(this, Formatting.Indented);
             File.WriteAllText(fileName, output);
         }
+
+        public T Clone<T>(T source)
+        {
+            var serialized = JsonConvert.SerializeObject(source);
+            return JsonConvert.DeserializeObject<T>(serialized);
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace PostageApp.DataBase
                 throw new ArgumentException($"Department with ID {item.DepartmentID} does not exist");
             if (string.IsNullOrEmpty(item.Name))
                 throw new ArgumentException("Name can't be empty");
+            if (Validator.IsValidName(item.Name) == false)
+                throw new ArgumentException("Name should contain letters only");
             if (item.HiredOn == null)
                 throw new ArgumentException("HiredOn can't be empty");
             if (item.HiredOn < new DateTime(2010, 01, 01))

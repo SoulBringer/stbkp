@@ -272,6 +272,7 @@ namespace PostageApp
                 var item = lstClient.SelectedItem as Client;
                 if (item != null)
                 {
+                    item = db.Clone(item);
                     item.Name = txtcname.Text;
                     item.Address = txtcaddress.Text;
 
@@ -348,6 +349,7 @@ namespace PostageApp
                 var item = lstDepartment.SelectedItem as Department;
                 if (item != null)
                 {
+                    item = db.Clone(item);
                     item.PostalIndex = txtdepindex.Text;
                     item.Address = txtdepaddress.Text;
 
@@ -419,6 +421,7 @@ namespace PostageApp
                 var item = lstPostageType.SelectedItem as PostageType;
                 if (item != null)
                 {
+                    item = db.Clone(item);
                     item.Name = txtptname.Text;
                     item.Note = txtnote.Text;
 
@@ -492,6 +495,7 @@ namespace PostageApp
                 var item = lstWorkman.SelectedItem as Workman;
                 if (item != null)
                 {
+                    item = db.Clone(item);
                     item.Name = txtwname.Text;
                     item.DepartmentID = GetSelectedId(cbwDepartment);
                     item.HiredOn = dtHiredOn.Value;

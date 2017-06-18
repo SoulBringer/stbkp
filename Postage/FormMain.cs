@@ -186,6 +186,7 @@ namespace PostageApp
                 var item = lstPostage.SelectedItem as Postage;
                 if (item != null)
                 {
+                    item = db.Clone(item);
                     item.ClientID = GetSelectedId(cbClientID);
                     item.DepartmentID = GetSelectedId(cbDepartment);
                     item.PostageTypeID = GetSelectedId(cbPostageType);

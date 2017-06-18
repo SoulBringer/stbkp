@@ -70,6 +70,7 @@
     <Compile Include="DataBase\Entities\Postage.cs" />
     <Compile Include="DataBase\Entities\PostageType.cs" />
     <Compile Include="DataBase\Entities\Workman.cs" />
+    <Compile Include="DataBase\Validator.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>

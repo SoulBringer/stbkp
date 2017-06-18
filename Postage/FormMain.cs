@@ -80,11 +80,6 @@ namespace PostageApp
             }
         }
 
-        private void lstClient_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             var postages = db.Postages.GetItems().ToArray();
@@ -134,6 +129,17 @@ namespace PostageApp
 
         }
 
+        private int GetSelectedId(ComboBox cbClientID)
+        {
+            var item = cbClientID.SelectedItem as IEntity;
+            if (item != null)
+                return item.ID;
+            return -1;
+        }
+
+
+        #region Postage
+
         private void lstPostage_SelectedIndexChanged(object sender, EventArgs e)
         {
             var item = lstPostage.SelectedItem as Postage;
@@ -148,14 +154,6 @@ namespace PostageApp
                 txtWeight.Text = item.Weight.ToString();
                 dtDelieredOn.Value = item.DeliveredOn;
             }
-        }
-
-        private int GetSelectedId(ComboBox cbClientID)
-        {
-            var item = cbClientID.SelectedItem as IEntity;
-            if (item != null)
-                return item.ID;
-            return -1;
         }
 
         private void btnPostageNew_Click(object sender, EventArgs e)
@@ -228,6 +226,84 @@ namespace PostageApp
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }        
+        }
+
+        #endregion
+
+        #region Client
+
+        private void lstClient_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = lstClient.SelectedItem as Client;
+            if (item != null)
+            {
+                txtcname.Text = item.Name;
+                txtcaddress.Text = item.Address;
+            }
+        }
+
+        private void btnClientNew_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = new Client()
+                {
+                    Name = txtcname.Text,
+                    Address = txtcaddress.Text
+                };
+                db.Clients.Add(item);
+                tabControl1_SelectedIndexChanged(this, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnClientUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstClient.SelectedItem as Client;
+                if (item != null)
+                {
+                    item.Name = txtcname.Text;
+                    item.Address = txtcaddress.Text;
+
+                    db.Clients.Update(item);
+                    tabControl1_SelectedIndexChanged(this, null);
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnClientRemove_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = lstClient.SelectedItem as Client;
+                if (item != null)
+                {
+                    if (MessageBox.Show("Delete selected entity?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        db.Clients.Remove(item.ID);
+                        tabControl1_SelectedIndexChanged(this, null);
+                    }
+                }
+                else
+                    MessageBox.Show("Select some entity in list");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        #endregion
     }
 }

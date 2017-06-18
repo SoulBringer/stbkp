@@ -331,6 +331,7 @@
             this.btnClientRemove.Size = new System.Drawing.Size(54, 54);
             this.btnClientRemove.TabIndex = 16;
             this.btnClientRemove.UseVisualStyleBackColor = true;
+            this.btnClientRemove.Click += new System.EventHandler(this.btnClientRemove_Click);
             // 
             // btnClientUpdate
             // 
@@ -340,6 +341,7 @@
             this.btnClientUpdate.Size = new System.Drawing.Size(54, 54);
             this.btnClientUpdate.TabIndex = 15;
             this.btnClientUpdate.UseVisualStyleBackColor = true;
+            this.btnClientUpdate.Click += new System.EventHandler(this.btnClientUpdate_Click);
             // 
             // btnClientNew
             // 
@@ -349,6 +351,7 @@
             this.btnClientNew.Size = new System.Drawing.Size(54, 54);
             this.btnClientNew.TabIndex = 14;
             this.btnClientNew.UseVisualStyleBackColor = true;
+            this.btnClientNew.Click += new System.EventHandler(this.btnClientNew_Click);
             // 
             // txtcaddress
             // 

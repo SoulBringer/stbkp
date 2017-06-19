@@ -85,6 +85,8 @@ namespace PostageApp
             var postages = db.Postages.GetItems().ToArray();
             var postageTypes = db.PostageTypes.GetItems().ToArray();
             var departments = db.Departments.GetItems().ToArray();
+            if (chkDepNotInUse.Checked)
+                departments = db.Departments.GetItems().Where(n => db.IsEntityInUse(n) == false).ToArray();
             var clients = db.Clients.GetItems().ToArray();
             var workmans = db.Workmans.GetItems().ToArray();
 
@@ -532,6 +534,11 @@ namespace PostageApp
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void chkDepNotInUse_CheckedChanged(object sender, EventArgs e)
+        {
+            tabControl1_SelectedIndexChanged(this, null);
         }
     }
 }

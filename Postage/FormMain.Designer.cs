@@ -77,6 +77,7 @@
             this.txtnote = new System.Windows.Forms.TextBox();
             this.lstPostageType = new System.Windows.Forms.ListBox();
             this.Workman = new System.Windows.Forms.TabPage();
+            this.dtHiredOn = new System.Windows.Forms.DateTimePicker();
             this.btnWorkmanRemove = new System.Windows.Forms.Button();
             this.btnWorkmanUpdate = new System.Windows.Forms.Button();
             this.btnWorkman_New = new System.Windows.Forms.Button();
@@ -89,7 +90,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnDBLoad = new System.Windows.Forms.ToolStripButton();
             this.btnDBSave = new System.Windows.Forms.ToolStripButton();
-            this.dtHiredOn = new System.Windows.Forms.DateTimePicker();
+            this.chkDepNotInUse = new System.Windows.Forms.CheckBox();
             this.btnWorkmanNew.SuspendLayout();
             this.Postage.SuspendLayout();
             this.Client.SuspendLayout();
@@ -399,6 +400,7 @@
             // 
             // Department
             // 
+            this.Department.Controls.Add(this.chkDepNotInUse);
             this.Department.Controls.Add(this.btnDepartmentRemove);
             this.Department.Controls.Add(this.btnDepartmentUpdate);
             this.Department.Controls.Add(this.btnDepartmentNew);
@@ -598,6 +600,13 @@
             this.Workman.Text = "Workman";
             this.Workman.UseVisualStyleBackColor = true;
             // 
+            // dtHiredOn
+            // 
+            this.dtHiredOn.Location = new System.Drawing.Point(431, 250);
+            this.dtHiredOn.Name = "dtHiredOn";
+            this.dtHiredOn.Size = new System.Drawing.Size(285, 20);
+            this.dtHiredOn.TabIndex = 21;
+            // 
             // btnWorkmanRemove
             // 
             this.btnWorkmanRemove.Image = global::PostageApp.Properties.Resources.Delete;
@@ -717,12 +726,16 @@
             this.btnDBSave.ToolTipText = "Save database";
             this.btnDBSave.Click += new System.EventHandler(this.btnDBSave_Click);
             // 
-            // dtHiredOn
+            // chkDepNotInUse
             // 
-            this.dtHiredOn.Location = new System.Drawing.Point(431, 250);
-            this.dtHiredOn.Name = "dtHiredOn";
-            this.dtHiredOn.Size = new System.Drawing.Size(285, 20);
-            this.dtHiredOn.TabIndex = 21;
+            this.chkDepNotInUse.AutoSize = true;
+            this.chkDepNotInUse.Location = new System.Drawing.Point(445, 23);
+            this.chkDepNotInUse.Name = "chkDepNotInUse";
+            this.chkDepNotInUse.Size = new System.Drawing.Size(195, 17);
+            this.chkDepNotInUse.TabIndex = 20;
+            this.chkDepNotInUse.Text = "Show ONLY departments not in use";
+            this.chkDepNotInUse.UseVisualStyleBackColor = true;
+            this.chkDepNotInUse.CheckedChanged += new System.EventHandler(this.chkDepNotInUse_CheckedChanged);
             // 
             // FormMain
             // 
@@ -815,6 +828,7 @@
         private System.Windows.Forms.Button btnWorkmanUpdate;
         private System.Windows.Forms.Button btnWorkman_New;
         private System.Windows.Forms.DateTimePicker dtHiredOn;
+        private System.Windows.Forms.CheckBox chkDepNotInUse;
     }
 }
 
